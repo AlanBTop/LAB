@@ -1,0 +1,31 @@
+/* /admin/admin_style.css */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    color: #333;
+}
+.container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+.login-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.login-form { background: #fff; padding: 2.5rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+.login-form h2 { margin-top: 0; }
+.form-group { text-align: left; margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+.error-message { color: #d9534f; background: #fdf2f2; border: 1px solid #d9534f; padding: 0.75rem; border-radius: 5px; }
+.btn { display: inline-block; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; background-color: #0d2c4f; color: #fff; font-weight: 700; cursor: pointer; text-decoration: none; width: 100%; box-sizing: border-box; transition: background-color 0.3s ease; }
+.btn:hover { background-color: #f26419; }
+.admin-header { background: #0d2c4f; color: #fff; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.admin-header h1 { margin: 0; font-size: 1.5rem; }
+.btn-logout { background-color: #d9534f; width: auto; }
+.btn-logout:hover { background-color: #c9302c; }
+.admin-table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+.admin-table th, .admin-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #eee; }
+.admin-table th { background-color: #f9f9f9; font-size: 0.9rem; text-transform: uppercase; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table td .btn { width: auto; font-size: 0.8rem; padding: 0.5rem 0.75rem; margin-right: 5px; }
+.btn-approve { background-color: #5cb85c; }
+.btn-approve:hover { background-color: #4cae4c; }
+.btn-remove { background-color: #d9534f; }
+.btn-remove:hover { background-color: #c9302c; }
+.tag-plano { background: #e0e8f0; color: #0d2c4f; padding: 0.25rem 0.5rem; border-radius: 15px; font-size: 0.8rem; font-weight: 700; }

@@ -1,0 +1,168 @@
+/* Ponto 8: Tipografia (Poppins) e Reset Global */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Ponto 8: Paleta de Cores */
+:root {
+    --primary-blue: #0d2c4f;
+    --primary-orange: #f26419;
+    --white: #ffffff;
+    --light-gray: #f7f9fa;
+    --medium-gray: #e0e0e0;
+    --dark-text: #333333;
+    --green-whatsapp: #25D366;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Ponto 1: Cabeçalho e Navegação */
+.header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--medium-gray);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+.logo strong { color: var(--primary-orange); }
+.nav-menu { display: flex; list-style: none; gap: 1.5rem; }
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--primary-orange); }
+.hamburger { display: none; cursor: pointer; }
+.bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: var(--primary-blue); transition: all 0.3s ease-in-out; }
+
+/* Botões Globais */
+.btn { display: inline-block; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; text-decoration: none; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
+.btn-primary { background-color: var(--primary-orange); color: var(--white); }
+.btn-primary:hover { background-color: #d9530f; transform: translateY(-2px); }
+.btn-whatsapp { background-color: var(--green-whatsapp); color: var(--white); font-size: 0.9rem; text-align: center; width: 100%; margin-top: 1rem; }
+.btn-whatsapp:hover { background-color: #20b056; }
+
+/* Ponto 2: Página Inicial - Hero */
+.hero { background-color: var(--primary-blue); color: var(--white); padding: 5rem 0; text-align: center; }
+.hero h1 { font-size: 2.8rem; margin-bottom: 1rem; line-height: 1.3; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+.search-bar { display: flex; justify-content: center; max-width: 600px; margin: 0 auto; }
+.search-bar input { flex-grow: 1; padding: 0.9rem; font-size: 1rem; border: none; border-radius: 8px 0 0 8px; }
+.search-bar button { border-radius: 0 8px 8px 0; }
+
+/* Ponto 2: Serviços Populares */
+.popular-services { padding: 4rem 0; background-color: var(--light-gray); }
+h2 { text-align: center; font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 2.5rem; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+.service-item { background-color: var(--white); border: 1px solid var(--medium-gray); border-radius: 8px; padding: 2rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.service-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); }
+.service-item svg { width: 50px; height: 50px; color: var(--primary-orange); margin-bottom: 1rem; }
+.service-item h3 { font-size: 1.1rem; color: var(--dark-text); }
+
+/* Ponto 2 e 3: Destaques e Cards de Profissionais */
+.featured-pros, .services-page { padding: 4rem 0; }
+.pros-grid, .providers-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.provider-card { background-color: var(--white); border: 1px solid var(--medium-gray); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); display: flex; padding: 1.5rem; gap: 1.5rem; align-items: flex-start; }
+.provider-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--light-gray); }
+.provider-info { flex-grow: 1; }
+.provider-info h3 { font-size: 1.3rem; color: var(--primary-blue); margin-bottom: 0.25rem; }
+.service-tag, .location-tag { display: inline-block; font-size: 0.85rem; padding: 0.25rem 0.75rem; border-radius: 15px; margin-bottom: 0.5rem; margin-right: 0.5rem; }
+.service-tag { background-color: #fdecdb; color: #a7420f; }
+.location-tag { background-color: #e0e8f0; color: var(--primary-blue); }
+
+/* Ponto 3: Filtros da Página de Serviços */
+.category-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; }
+.filter-btn { padding: 0.5rem 1.25rem; border: 1px solid var(--medium-gray); background-color: var(--white); color: var(--dark-text); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; }
+.filter-btn:hover, .filter-btn.active { background-color: var(--primary-blue); color: var(--white); border-color: var(--primary-blue); }
+
+/* Cabeçalho de Página Genérico */
+.page-header { background-color: var(--light-gray); padding: 3rem 0; text-align: center; }
+.page-header h1 { font-size: 2.5rem; color: var(--primary-blue); }
+.page-header p { font-size: 1.1rem; color: var(--dark-text); opacity: 0.8; }
+
+/* Ponto 4: Formulários */
+.form-section, .help-section { padding: 4rem 0; }
+.main-form { max-width: 700px; margin: 0 auto; background: var(--white); border: 1px solid var(--medium-gray); padding: 2.5rem; border-radius: 8px; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; }
+.form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="email"], .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; font-size: 1rem; border: 1px solid var(--medium-gray); border-radius: 8px; background-color: var(--light-gray); }
+.main-form button { width: 100%; font-size: 1.1rem; }
+
+/* Ponto 5: Página de Ajuda */
+.help-content { max-width: 800px; margin: 0 auto; }
+.help-intro, .faq, .support-form { margin-bottom: 3rem; }
+.help-intro h2, .faq h2, .support-form h2 { text-align: left; margin-bottom: 1.5rem; }
+.faq-item { border-bottom: 1px solid var(--medium-gray); padding: 1rem 0; }
+.faq-item summary { font-weight: 500; font-size: 1.1rem; cursor: pointer; list-style: none; position: relative; padding-right: 2rem; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: '+'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--primary-orange); }
+.faq-item[open] summary::after { content: '−'; }
+.faq-item p { margin-top: 1rem; padding-left: 0.5rem; }
+
+/* Ponto 1: Rodapé */
+.footer { background-color: var(--primary-blue); color: var(--white); padding-top: 3rem; margin-top: 2rem; }
+.footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding-bottom: 2rem; }
+/* ... (Restante do CSS do rodapé) ... */
+.footer-bottom { text-align: center; padding: 1.5rem 0; border-top: 1px solid #2a4a6e; opacity: 0.8; }
+
+/* ======================================= */
+/* Estilos para a Seção de Planos (Ponto 10) */
+/* ======================================= */
+.plan-selection { border: none; padding: 0; margin: 0; margin-bottom: 2.5rem; }
+.plan-selection legend { font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 0.5rem; }
+.plan-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.plan-card input[type="radio"] { display: none; }
+.plan-card { display: block; border: 2px solid var(--medium-gray); border-radius: 8px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; }
+.plan-card:hover { border-color: var(--primary-orange); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+.plan-card:has(input[type="radio"]:checked) { border-color: var(--primary-blue); background-color: var(--light-gray); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.plan-content h3 { font-size: 1.25rem; color: var(--primary-blue); }
+.plan-content strong { font-size: 1.2rem; color: var(--primary-orange); margin: 0.25rem 0; display: block; }
+.form-section fieldset { border: none; padding: 0; margin: 0; }
+.form-section fieldset legend { font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 1.5rem; }
+.form-notice { font-size: 0.9rem; text-align: center; background-color: var(--light-gray); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+
+/* Ponto 1: Responsividade (Mobile) */
+@media (max-width: 768px) {
+    .nav-menu { position: fixed; left: -100%; top: 80px; flex-direction: column; background-color: var(--white); width: 100%; text-align: center; transition: 0.3s; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); }
+    .nav-menu.active { left: 0; }
+    .nav-menu li { padding: 1rem 0; border-bottom: 1px solid var(--light-gray); }
+    .hamburger { display: block; }
+    .hamburger.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    .hero h1 { font-size: 2.2rem; }
+    .search-bar { flex-direction: column; gap: 0.5rem; }
+    .search-bar input, .search-bar button { border-radius: 8px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .pros-grid, .providers-list { grid-template-columns: 1fr; }
+    .provider-card { flex-direction: column; align-items: center; text-align: center; }
+}

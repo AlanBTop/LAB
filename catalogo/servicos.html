@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços - Conecta Serviços Cáceres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Conecta Serviços <strong>Cáceres</strong></a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="servicos.html" class="nav-link active">Serviços</a></li>
+                    <li><a href="cadastro.html" class="nav-link">Cadastre-se</a></li>
+                    <li><a href="ajuda.html" class="nav-link">Ajuda</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Todos os Serviços</h1>
+                <p>Encontre o profissional que você precisa.</p>
+            </div>
+        </section>
+
+        <section class="services-page">
+            <div class="container">
+                <div class="category-filters">
+                    <button class="filter-btn active">Todos</button>
+                    </div>
+
+                <div class="providers-list" id="lista-de-servicos">
+                    <p>Carregando profissionais...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('lista-de-servicos');
+
+        try {
+            // Usa o caminho relativo para a API
+            const response = await fetch('api/listar_servicos.php');
+            const servicos = await response.json();
+
+            if (servicos.length === 0) {
+                container.innerHTML = '<p>Nenhum serviço aprovado encontrado no momento.</p>';
+                return;
+            }
+
+            container.innerHTML = ''; // Limpa o "Carregando..."
+
+            servicos.forEach(servico => {
+                const card = document.createElement('article');
+                card.className = 'provider-card';
+                
+                const imageUrl = servico.imagem_url ? servico.imagem_url : 'https://via.placeholder.com/80';
+                const telefoneLimpo = servico.telefone.replace(/\D/g, '');
+                const local = servico.local_bairro ? servico.local_bairro : 'Cáceres-MT';
+
+                card.innerHTML = `
+                    <img src="${imageUrl}" alt="${servico.nome}">
+                    <div class="provider-info">
+                        <h3>${servico.nome}</h3>
+                        <span class="service-tag">${servico.tipo_servico}</span>
+                        <span class="location-tag">${local}</span>
+                        <a href="https://wa.me/55${telefoneLimpo}" target="_blank" class="btn btn-whatsapp">
+                            Chamar no WhatsApp
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+        } catch (error) {
+            container.innerHTML = '<p style="color: red;">Erro ao carregar os serviços. Tente recarregar a página.</p>';
+        }
+    });
+    </script>
+</body>
+</html>

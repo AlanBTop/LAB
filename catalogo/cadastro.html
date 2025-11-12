@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastre-se - Conecta Serviços Cáceres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Conecta Serviços <strong>Cáceres</strong></a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="servicos.html" class="nav-link">Serviços</a></li>
+                    <li><a href="cadastro.html" class="nav-link active">Cadastre-se</a></li>
+                    <li><a href="ajuda.html" class="nav-link">Ajuda</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Cadastre seu Serviço</h1>
+                <p>Faça parte do nosso catálogo e seja encontrado por novos clientes!</p>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="container">
+                <form class="main-form" id="form-cadastro">
+
+                    <fieldset class="form-group plan-selection">
+                        <legend>1. Escolha seu plano</legend>
+                        <div class="plan-options">
+                            <label class="plan-card">
+                                <input type="radio" name="plano" value="inicial" checked>
+                                <div class="plan-content">
+                                    <h3>Plano Inicial</h3>
+                                    <strong>R$ 10,00 / mês</strong>
+                                </div>
+                            </label>
+                            <label class="plan-card">
+                                <input type="radio" name="plano" value="destaque">
+                                <div class="plan-content">
+                                    <h3>Plano Destaque</h3>
+                                    <strong>R$ 19,90 / mês</strong>
+                                </div>
+                            </label>
+                            <label class="plan-card">
+                                <input type="radio" name="plano" value="profissional">
+                                <div class="plan-content">
+                                    <h3>Plano Profissional</h3>
+                                    <strong>R$ 39,90 / mês</strong>
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <legend>2. Informações do Profissional</legend>
+                        
+                        <div class="form-group">
+                            <label for="nome">Nome Completo ou Nome da Empresa *</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="servico">Tipo de Serviço Principal *</label>
+                            <select id="servico" name="servico" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="montador">Montador de Móveis</option>
+                                <option value="pedreiro">Pedreiro</option>
+                                <option value="encanador">Encanador</option>
+                                <option value="eletricista">Eletricista</option>
+                                <option value="piscina">Limpador de Piscina</option>
+                                <option value="mudanca">Empresa de Mudança</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone (WhatsApp) *</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(65) 9XXXX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="local">Localização (Bairro principal)</label>
+                            <input type="text" id="local" name="local" placeholder="Ex: Centro">
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Breve Descrição (Opcional)</label>
+                            <textarea id="descricao" name="descricao" rows="4"></textarea>
+                        </div>
+                    </fieldset>
+                    
+                    <p class="form-notice">Após o envio, nossa equipe entrará em contato.</p>
+                    
+                    <div id="form-message" style="margin-top: 1rem; text-align: center;"></div>
+
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Enviar Cadastro</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        </footer>
+
+    <script src="script.js"></script>
+    
+    <script>
+    document.getElementById('form-cadastro').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Impede o envio tradicional
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const submitButton = document.getElementById('btn-submit');
+        const messageDiv = document.getElementById('form-message');
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+        messageDiv.textContent = '';
+
+        try {
+            // Usa o caminho relativo para a API
+            const response = await fetch('api/cadastro.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok) { // Sucesso
+                messageDiv.style.color = 'green';
+                messageDiv.textContent = result.message;
+                form.reset();
+            } else { // Erro
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Erro: ' + result.message;
+            }
+
+        } catch (error) {
+            messageDiv.style.color = 'red';
+            messageDiv.textContent = 'Erro de rede. Tente novamente.';
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Enviar Cadastro';
+        }
+    });
+    </script>
+</body>
+</html>
