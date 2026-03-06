@@ -1,23 +1,20 @@
 <?php
-// /admin/login.php
+// /catalogo/admin/login.php
+include '../api/conexao.php';
 session_start();
 
-if (isset($_SESSION['admin_logado']) && $_SESSION['admin_logado'] === true) {
-    header("Location: painel.php");
-    exit;
-}
-$erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usuario = $_POST['usuario'] ?? '';
-    $senha = $_POST['senha'] ?? '';
+    $usuario = $_POST['usuario'];
+    $senha = $_POST['senha'];
 
-    $USUARIO_ADMIN = 'admin';
-    $SENHA_ADMIN = 'admin123';
+    $sql = "SELECT senha FROM administradores WHERE usuario = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$usuario]);
+    $admin = $stmt->fetch();
 
-    if ($usuario === $USUARIO_ADMIN && $senha === $SENHA_ADMIN) {
-        $_SESSION['admin_logado'] = true;
-        $_SESSION['usuario'] = $usuario;
-        header("Location: painel.php");
+    if ($admin && password_verify($senha, $admin['senha'])) {
+        $_SESSION['admin_logged_in'] = true;
+        header('Location: painel.php');
         exit;
     } else {
         $erro = "Usuário ou senha inválidos.";
@@ -27,28 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Catálogo Cáceres</title>
-    <link rel="stylesheet" href="admin_style.css">
+    <title>Login Admin</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>body { padding-top: 50px; text-align: center; } .login-box { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }</style>
 </head>
 <body>
-    <div class="login-container">
-        <form class="login-form" method="POST">
-            <h2>Painel Administrativo</h2>
-            <p>Conecta Serviços Cáceres</p>
-            <div class="form-group">
-                <label for="usuario">Usuário:</label>
-                <input type="text" id="usuario" name="usuario" required>
-            </div>
-            <div class="form-group">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-            </div>
-            <?php if (!empty($erro)): ?>
-                <p class="error-message"><?php echo $erro; ?></p>
-            <?php endif; ?>
-            <button type="submit" class="btn">Entrar</button>
+    <div class="login-box">
+        <h2>Acesso Administrativo</h2>
+        <?php if (isset($erro)) echo "<p style='color:red;'>$erro</p>"; ?>
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Usuário" required><br><br>
+            <input type="password" name="senha" placeholder="Senha" required><br><br>
+            <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
     </div>
 </body>

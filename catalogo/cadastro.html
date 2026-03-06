@@ -3,159 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastre-se - Conecta Serviços Cáceres</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Cadastro de Prestador - Conecta Serviços</title>
+    <link rel="stylesheet" href="style.css"> 
+    
+    <style>
+        /* Estilos base para o formulário */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        
+        /* Estilos dos Fieldsets */
+        fieldset { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 6px; }
+        legend { font-size: 1.2rem; font-weight: bold; color: #0d2c4f; padding: 0 10px; }
+
+        /* Estilos dos Grupos e Inputs */
+        .form-group input[type="text"], 
+        .form-group input[type="tel"], 
+        .form-group input[type="file"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Estilo para Radio Buttons */
+        .plan-selection label {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: normal;
+        }
+        
+        /* Estilos dos Botões e Mensagens */
+        .btn-primary { background-color: #f26419; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-primary:hover { background-color: #0d2c4f; }
+        #form-message { margin-top: 15px; padding: 10px; border-radius: 4px; }
+        
+        /* Estilos dos Quadros de Ajuda (do código anterior) */
+        .help-box, .warning-box {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .help-box { background-color: #e6f7ff; border: 1px solid #91d5ff; color: #0050b3; }
+        .help-box h4 { color: #003a8c; margin-top: 0; }
+        .warning-box { background-color: #fffbe6; border: 1px solid #ffe58f; color: #ad8b00; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Cadastro de Profissional em Cáceres</h2>
 
-    <header class="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo">Conecta Serviços <strong>Cáceres</strong></a>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="servicos.html" class="nav-link">Serviços</a></li>
-                    <li><a href="cadastro.html" class="nav-link active">Cadastre-se</a></li>
-                    <li><a href="ajuda.html" class="nav-link">Ajuda</a></li>
-                </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </nav>
+        <div class="help-box">
+            <h4>✨ Escolha o Plano Ideal para seu Negócio</h4>
+            <p>Selecione um plano para liberar campos e recursos adicionais no seu perfil:</p>
+            <ul>
+                <li>
+                    <strong>Plano Inicial (R$ 10/mês):</strong> Cadastro simples com nome, telefone, serviço e bairro.
+                </li>
+                <li>
+                    <strong>Plano Destaque (R$ 19,90/mês):</strong> Adiciona **banner de 2 imagens** e caixas de descrição.
+                </li>
+                <li>
+                    <strong>Plano Profissional (R$ 39,90/mês):</strong> Máximo de visibilidade! Inclui **carousel de 6 imagens**, descrição completa, **mapa de localização** e links para redes sociais.
+                </li>
+            </ul>
+            <p class="warning-box" style="font-size:0.9rem;">
+                ⚠️ **Atenção:** Os campos só aparecerão para preenchimento após você selecionar um plano que os inclua.
+            </p>
         </div>
-    </header>
+        <form class="main-form" id="form-cadastro" enctype="multipart/form-data">
+            
+            <fieldset class="form-group plan-selection">
+                <legend>1. Escolha seu plano</legend>
+                <label><input type="radio" name="plano" value="inicial" checked> Inicial (R$ 10/mês)</label>
+                <label><input type="radio" name="plano" value="destaque"> Destaque (R$ 19,90/mês)</label>
+                <label><input type="radio" name="plano" value="profissional"> Profissional (R$ 39,90/mês)</label>
+            </fieldset>
 
-    <main>
-        <section class="page-header">
-            <div class="container">
-                <h1>Cadastre seu Serviço</h1>
-                <p>Faça parte do nosso catálogo e seja encontrado por novos clientes!</p>
-            </div>
-        </section>
-
-        <section class="form-section">
-            <div class="container">
-                <form class="main-form" id="form-cadastro">
-
-                    <fieldset class="form-group plan-selection">
-                        <legend>1. Escolha seu plano</legend>
-                        <div class="plan-options">
-                            <label class="plan-card">
-                                <input type="radio" name="plano" value="inicial" checked>
-                                <div class="plan-content">
-                                    <h3>Plano Inicial</h3>
-                                    <strong>R$ 10,00 / mês</strong>
-                                </div>
-                            </label>
-                            <label class="plan-card">
-                                <input type="radio" name="plano" value="destaque">
-                                <div class="plan-content">
-                                    <h3>Plano Destaque</h3>
-                                    <strong>R$ 19,90 / mês</strong>
-                                </div>
-                            </label>
-                            <label class="plan-card">
-                                <input type="radio" name="plano" value="profissional">
-                                <div class="plan-content">
-                                    <h3>Plano Profissional</h3>
-                                    <strong>R$ 39,90 / mês</strong>
-                                </div>
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="form-group">
-                        <legend>2. Informações do Profissional</legend>
-                        
-                        <div class="form-group">
-                            <label for="nome">Nome Completo ou Nome da Empresa *</label>
-                            <input type="text" id="nome" name="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="servico">Tipo de Serviço Principal *</label>
-                            <select id="servico" name="servico" required>
-                                <option value="">Selecione uma categoria</option>
-                                <option value="montador">Montador de Móveis</option>
-                                <option value="pedreiro">Pedreiro</option>
-                                <option value="encanador">Encanador</option>
-                                <option value="eletricista">Eletricista</option>
-                                <option value="piscina">Limpador de Piscina</option>
-                                <option value="mudanca">Empresa de Mudança</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefone">Telefone (WhatsApp) *</label>
-                            <input type="tel" id="telefone" name="telefone" placeholder="(65) 9XXXX-XXXX" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="local">Localização (Bairro principal)</label>
-                            <input type="text" id="local" name="local" placeholder="Ex: Centro">
-                        </div>
-                        <div class="form-group">
-                            <label for="descricao">Breve Descrição (Opcional)</label>
-                            <textarea id="descricao" name="descricao" rows="4"></textarea>
-                        </div>
-                    </fieldset>
-                    
-                    <p class="form-notice">Após o envio, nossa equipe entrará em contato.</p>
-                    
-                    <div id="form-message" style="margin-top: 1rem; text-align: center;"></div>
-
-                    <button type="submit" class="btn btn-primary" id="btn-submit">Enviar Cadastro</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        </footer>
-
-    <script src="script.js"></script>
+            <fieldset class="form-group">
+                <legend>2. Informações Básicas</legend>
+                <input type="text" name="nome" placeholder="Nome Completo / Empresa *" required>
+                <select name="servico" required>
+    <option value="">Selecione a Categoria *</option>
     
+    <optgroup label="Construção e Reformas">
+        <option value="pedreiro">Pedreiro</option>
+        <option value="eletricista">Eletricista</option>
+        <option value="encanador">Encanador/Bombeiro Hidráulico</option>
+        <option value="pintor">Pintor</option>
+        <option value="gesseiro">Gesseiro/Drywall</option>
+        <option value="serralheiro">Serralheiro</option>
+        <option value="telhadista">Telhadista</option>
+    </optgroup>
+
+    <optgroup label="Serviços Domésticos e Gerais">
+        <option value="diarista">Diarista/Faxineira</option>
+        <option value="jardineiro">Jardineiro</option>
+        <option value="piscineiro">Piscineiro</option>
+        <option value="dedetizador">Dedetizador</option>
+        <option value="montador">Montador de Móveis</option>
+        <option value="chaveiro">Chaveiro</option>
+    </optgroup>
+
+    <optgroup label="Tecnologia e Eletrônica">
+        <option value="tecnico_informatica">Técnico em Informática</option>
+        <option value="tecnico_celular">Técnico de Celular/Tablet</option>
+        <option value="ar_condicionado">Instalação/Manutenção de Ar Condicionado</option>
+        <option value="antenas">Instalador de Antenas e TV</option>
+    </optgroup>
+
+    <optgroup label="Estética e Saúde">
+        <option value="cabeleireiro">Cabeleireiro(a) / Barbeiro(a)</option>
+        <option value="manicure">Manicure / Pedicure</option>
+        <option value="massagista">Massagista</option>
+        <option value="nutricionista">Nutricionista</option>
+    </optgroup>
+
+    <optgroup label="Serviços Automotivos">
+        <option value="mecanico">Mecânico Geral</option>
+        <option value="borracheiro">Borracheiro</option>
+        <option value="lavajato">Lava Jato / Estética Automotiva</option>
+    </optgroup>
+    
+    <option value="outros">Outros Serviços</option>
+
+</select>
+                <input type="tel" name="telefone" placeholder="Telefone (WhatsApp) *" required>
+                <input type="text" name="local" placeholder="Localização (Bairro)">
+                <input type="text" name="descricao_curta" placeholder="Breve Descrição (Máx. 255 caracteres)" required>
+            </fieldset>
+            
+            <fieldset class="form-group extra-fields" id="campos-destaque" style="display:none;">
+                <legend>3. Conteúdo Avançado (Plano Destaque)</legend>
+                <textarea name="especialidades" rows="3" placeholder="Especialidades: Foco e Diferenciais"></textarea>
+                <input type="text" name="tempo_experiencia" placeholder="Tempo de Experiência (Ex: 5 anos)">
+                <input type="text" name="horario_atendimento" placeholder="Horário de Atendimento (Ex: Seg-Sex, 8h-18h)">
+                
+                <label class="upload-label">Upload de Banners (Plano Destaque: Max 2)</label>
+                <input type="file" name="imagem1" accept="image/*">
+                <input type="file" name="imagem2" accept="image/*">
+            </fieldset>
+
+            <fieldset class="form-group extra-fields" id="campos-profissional" style="display:none;">
+                <legend>4. Recursos Exclusivos (Plano Profissional)</legend>
+                <textarea name="descricao_completa" rows="6" placeholder="Descrição Completa dos Serviços (Detalhada)"></textarea>
+                
+                <input type="text" name="localizacao" placeholder="Endereço ou Coordenadas para Mapa (Ex: -16.079201, -57.653456)">
+
+                <input type="text" name="facebook" placeholder="Link do Facebook (opcional)">
+                <input type="text" name="instagram" placeholder="Link do Instagram (opcional)">
+
+                <label class="upload-label">Banners Adicionais (Total de 6)</label>
+                <input type="file" name="imagem3" accept="image/*">
+                <input type="file" name="imagem4" accept="image/*">
+                <input type="file" name="imagem5" accept="image/*">
+                <input type="file" name="imagem6" accept="image/*">
+            </fieldset>
+            
+            <div id="form-message"></div>
+            <button type="submit" class="btn btn-primary" id="btn-submit">Enviar Cadastro</button>
+        </form>
+    </div>
+
     <script>
-    document.getElementById('form-cadastro').addEventListener('submit', async (event) => {
-        event.preventDefault(); // Impede o envio tradicional
+    document.addEventListener('DOMContentLoaded', () => {
+        const radios = document.querySelectorAll('input[name="plano"]');
+        const destaque = document.getElementById('campos-destaque');
+        const profissional = document.getElementById('campos-profissional');
 
-        const form = event.target;
-        const formData = new FormData(form);
-        const submitButton = document.getElementById('btn-submit');
-        const messageDiv = document.getElementById('form-message');
-
-        submitButton.disabled = true;
-        submitButton.textContent = 'Enviando...';
-        messageDiv.textContent = '';
-
-        try {
-            // Usa o caminho relativo para a API
-            const response = await fetch('api/cadastro.php', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if (response.ok) { // Sucesso
-                messageDiv.style.color = 'green';
-                messageDiv.textContent = result.message;
-                form.reset();
-            } else { // Erro
-                messageDiv.style.color = 'red';
-                messageDiv.textContent = 'Erro: ' + result.message;
-            }
-
-        } catch (error) {
-            messageDiv.style.color = 'red';
-            messageDiv.textContent = 'Erro de rede. Tente novamente.';
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Enviar Cadastro';
+        function updateFields() {
+            const plano = document.querySelector('input[name="plano"]:checked').value;
+            
+            // Lógica para mostrar/esconder os campos adicionais
+            destaque.style.display = (plano !== 'inicial') ? 'block' : 'none';
+            profissional.style.display = (plano === 'profissional') ? 'block' : 'none';
         }
+
+        radios.forEach(radio => radio.addEventListener('change', updateFields));
+        updateFields(); // Executa na carga para garantir o estado inicial
+
+        // Lógica de envio do formulário (mantida igual)
+        document.getElementById('form-cadastro').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const submitButton = document.getElementById('btn-submit');
+            const messageDiv = document.getElementById('form-message');
+
+            submitButton.disabled = true; submitButton.textContent = 'Enviando...'; messageDiv.textContent = '';
+            
+            try {
+                const response = await fetch('api/cadastro.php', { method: 'POST', body: formData });
+                const result = await response.json();
+                messageDiv.style.color = response.ok ? 'green' : 'red';
+                messageDiv.textContent = result.message;
+                if (response.ok) event.target.reset();
+            } catch (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Erro de rede ou XAMPP. Tente novamente.';
+            } finally {
+                submitButton.disabled = false; submitButton.textContent = 'Enviar Cadastro';
+            }
+        });
     });
     </script>
 </body>
 </html>
+<div class="container">
+    <a href="index.html" class="btn btn-back">← Voltar ao Menu Principal</a>
+    <h2>Cadastro de Profissional em Cáceres</h2>
+    </div>
+
+<style>
+/* Estilo para Botão Voltar */
+.btn-back {
+    display: inline-block;
+    background-color: transparent;
+    color: #0d2c4f; /* Cor principal */
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+.btn-back:hover {
+    background-color: #f0f0f0;
+}
+</style>

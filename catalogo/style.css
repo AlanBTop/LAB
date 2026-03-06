@@ -166,3 +166,59 @@ h2 { text-align: center; font-size: 2.2rem; color: var(--primary-blue); margin-b
     .pros-grid, .providers-list { grid-template-columns: 1fr; }
     .provider-card { flex-direction: column; align-items: center; text-align: center; }
 }
+/* --- Estilos para Quadros de Mensagem (Ajuda e Alerta) --- */
+.help-box, .message-box {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.help-box {
+    background-color: #e6f7ff; /* Azul claro */
+    border: 1px solid #91d5ff;
+    color: #0050b3;
+}
+
+.help-box h4 {
+    color: #003a8c;
+    margin-top: 0;
+}
+
+.warning-box {
+    background-color: #fffbe6; /* Amarelo claro */
+    border: 1px solid #ffe58f;
+    color: #ad8b00;
+}
+
+/* --- Estilos para Selos de Planos nos Cards e Perfil --- */
+.plano-selo, .plano-tag-inicial, .plano-tag-destaque, .plano-tag-profissional {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 5px; /* Para separar do nome/título */
+}
+
+/* Cores do Plano Inicial (Neutro/Básico) */
+.plano-tag-inicial, .plano-selo[data-plano="inicial"] {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+/* Cores do Plano Destaque (Atenção) */
+.plano-tag-destaque, .plano-selo[data-plano="destaque"] {
+    background-color: #fff3cd; 
+    color: #856404;
+    border: 1px solid #ffc107;
+}
+
+/* Cores do Plano Profissional (Premium) */
+.plano-tag-profissional, .plano-selo[data-plano="profissional"] {
+    background-color: #d4edda; 
+    color: #155724;
+    border: 1px solid #28a745;
+}
