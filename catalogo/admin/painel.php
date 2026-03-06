@@ -1,121 +1,103 @@
 <?php
-// /admin/painel.php
+// /catalogo/admin/painel.php
+include '../api/conexao.php';
 session_start();
 
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
-    header("Location: login.php");
+if (!isset($_SESSION['admin_logged_in'])) {
+    header('Location: login.php');
     exit;
 }
 
-// Conexão com o BD (note o '../api/')
-include '../api/conexao.php';
+// Lógica de busca
+$stmt = $pdo->query("SELECT * FROM prestadores ORDER BY status, data_cadastro DESC");
+$prestadores = $stmt->fetchAll();
 
-// Busca de Cadastros Pendentes
-try {
-    $stmt = $pdo->query("
-        SELECT id, nome, tipo_servico, telefone, plano_escolhido, data_cadastro 
-        FROM prestadores 
-        WHERE status = 'pendente' 
-        ORDER BY data_cadastro ASC
-    ");
-    $pendentes = $stmt->fetchAll();
-} catch (PDOException $e) {
-    $erro_painel = "Erro ao buscar cadastros: " . $e->getMessage();
+// Lógica para logout
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header('Location: login.php');
+    exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin - Catálogo Cáceres</title>
-    <link rel="stylesheet" href="admin_style.css">
+    <title>Painel Admin</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body { padding: 20px; } 
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; font-size: 0.85rem; }
+        .plano-tag-inicial { background-color: #f0f0f0; }
+        .plano-tag-destaque { background-color: #fff3cd; color: #856404; }
+        .plano-tag-profissional { background-color: #d4edda; color: #155724; font-weight: bold; }
+        .status-pendente { color: orange; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <header class="admin-header">
-        <h1>Painel Administrativo</h1>
-        <span>Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?>!</span>
-        <a href="logout.php" class="btn btn-logout">Sair</a>
-    </header>
-
-    <main class="container">
-        <h2>Cadastros Pendentes de Aprovação</h2>
-        
-        <?php if (isset($erro_painel)): ?>
-            <p class="error-message"><?php echo $erro_painel; ?></p>
-        <?php endif; ?>
-
-        <?php if (empty($pendentes) && !isset($erro_painel)): ?>
-            <p>Nenhum cadastro pendente no momento.</p>
-        <?php else: ?>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Serviço</th>
-                        <th>Plano</th>
-                        <th>Data</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-pendentes">
-                    <?php foreach ($pendentes as $item): ?>
-                        <tr id="item-<?php echo $item['id']; ?>">
-                            <td><?php echo htmlspecialchars($item['nome']); ?></td>
-                            <td><?php echo htmlspecialchars($item['telefone']); ?></td>
-                            <td><?php echo htmlspecialchars($item['tipo_servico']); ?></td>
-                            <td><span class="tag-plano"><?php echo htmlspecialchars($item['plano_escolhido']); ?></span></td>
-                            <td><?php echo date('d/m/Y H:i', strtotime($item['data_cadastro'])); ?></td>
-                            <td>
-                                <button class="btn btn-approve" data-id="<?php echo $item['id']; ?>">Aprovar</button>
-                                <button class="btn btn-remove" data-id="<?php echo $item['id']; ?>">Reprovar</button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </main>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tabela = document.getElementById('tabela-pendentes');
-        tabela.addEventListener('click', (event) => {
-            const target = event.target;
-            const id = target.dataset.id;
-            if (!id) return;
-            let actionFile = '';
-            if (target.classList.contains('btn-approve')) {
-                actionFile = 'aprovar.php';
-            } else if (target.classList.contains('btn-remove')) {
-                actionFile = 'remover.php';
-            } else { return; }
-            if (!confirm('Tem certeza?')) { return; }
-            gerenciarCadastro(id, actionFile, target);
-        });
-
-        async function gerenciarCadastro(id, url, button) {
-            button.disabled = true;
-            button.textContent = 'Aguarde...';
-            const formData = new FormData();
-            formData.append('id', id);
-
-            try {
-                const response = await fetch(url, { method: 'POST', body: formData });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    document.getElementById(`item-${id}`).remove();
-                } else {
-                    alert('Erro: ' + result.message);
-                    button.disabled = false;
-                }
-            } catch (error) {
-                alert('Erro na requisição: ' + error.message);
-                button.disabled = false;
-            }
-        }
-    });
-    </script>
+    <h2>Gerenciamento de Prestadores</h2>
+    <a href="?logout" class="btn btn-primary" style="float: right;">Sair</a>
+    <a href="../cadastro.html" class="btn btn-primary" style="margin-right: 10px;">Novo Cadastro (Teste)</a>
+    
+    <?php 
+    if (isset($_SESSION['mensagem_admin'])) {
+        $msg = $_SESSION['mensagem_admin'];
+        echo "<p style='color:".($msg['tipo'] == 'success' ? 'green' : 'red').";'>{$msg['texto']}</p>";
+        unset($_SESSION['mensagem_admin']);
+    }
+    ?>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Serviço</th>
+                <th>Bairro</th>
+                <th>Status</th>
+                <th>Plano Atual</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($prestadores as $p): ?>
+            <tr>
+                <td><?php echo $p['id']; ?></td>
+                <td><?php echo htmlspecialchars($p['nome']); ?></td>
+                <td><?php echo htmlspecialchars($p['tipo_servico']); ?></td>
+                <td><?php echo htmlspecialchars($p['local_bairro']); ?></td>
+                <td class="status-<?php echo $p['status']; ?>"><?php echo strtoupper($p['status']); ?></td>
+                <td class="plano-tag-<?php echo $p['plano']; ?>"><?php echo strtoupper($p['plano']); ?></td>
+                <td>
+                    <form method="POST" action="mudar_status_plano.php" style="display:inline-flex; gap:5px;">
+                        <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
+                        
+                        <select name="novo_plano">
+                            <option value="inicial" <?php echo $p['plano'] == 'inicial' ? 'selected' : ''; ?>>Inicial</option>
+                            <option value="destaque" <?php echo $p['plano'] == 'destaque' ? 'selected' : ''; ?>>Destaque</option>
+                            <option value="profissional" <?php echo $p['plano'] == 'profissional' ? 'selected' : ''; ?>>Profissional</option>
+                        </select>
+                        
+                        <?php if ($p['status'] === 'pendente' || $p['status'] === 'reprovado'): ?>
+                            <button type="submit" name="acao" value="aprovar" class="btn btn-success">Aprovar & Atualizar</button>
+                        <?php endif; ?>
+                        
+                        <button type="submit" name="acao" value="reprovar" class="btn btn-danger">Reprovar</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </body>
 </html>
+<div class="help-box" style="margin-top: 50px;">
+    <h4>⚙️ Instruções de Gerenciamento</h4>
+    <p>Use este painel para aprovar ou reprovar cadastros pendentes e para gerenciar o plano de cada prestador:</p>
+    <ul>
+        <li>**Cadastros Pendentes (PENDENTE):** Devem ser revisados. Use o menu de seleção para definir o plano e clique em **Aprovar & Atualizar**.</li>
+        <li>**Mudança de Plano:** Você pode mudar o plano de qualquer prestador aprovado usando o menu de seleção e clicando em **Aprovar & Atualizar** (o status permanece aprovado).</li>
+        <li>**Pré-visualização:** Clique no **nome** do prestador para visualizar como o perfil dele aparece no site.</li>
+    </ul>
+</div>
